@@ -8,8 +8,8 @@ window.APP_CONFIG = {
     "https://bsc-rpc.publicnode.com",
     "https://binance.llamarpc.com"
   ],
-  vaultAddress: "0x0000000000000000000000000000000000000000",
-  tokenAddress: "0x0000000000000000000000000000000000000000",
+  vaultAddress: "0x0F54cb3df81A58f7e2Fe94dcbb1453342CB2785E",
+  tokenAddress: "0xeefcfee21627ae72088cadb7dff48cc1081c7777",
 
   seedConfigs: {
     0: { name: "青训新秀", tokenCost: "10000", fertilizePrice: "0.001" },

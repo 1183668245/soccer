@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soccer绿茵联赛</title>
+  <link rel="icon" type="image/webp" href="./jpg/favicon.ico.webp" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/landing.css" />
+</head>
+
+<body class="is-home"
+  style="background: #ffffff; color: #0f172a; margin: 0; font-family: 'Segoe UI', 'PingFang SC', sans-serif;">
+  <header class="site-header" style="background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 15px 0;">
+    <div class="container nav"
+      style="height: auto; display: flex; justify-content: space-between; align-items: center;">
+      <!-- 左侧 Logo -->
+      <div class="brand" style="display: flex; align-items: center;">
+        <img class="brand-logo-img" src="./jpg/logo.webp" alt="Soccer绿茵联赛"
+          style="width: 44px; height: 44px; object-fit: contain;" />
+        <div class="brand-text"
+          style="font-size: 24px; font-weight: 900; font-style: italic; color: #1e3a8a; letter-spacing: -1px; margin-left: 10px;">
+          Soccer</div>
+      </div>
+
+      <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="打开菜单" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- 右侧 导航 + 按钮组合 -->
+      <div class="home-nav-group" style="display: flex; align-items: center; gap: 40px;">
+        <nav id="mobileNavPanel" class="nav-links mobile-nav-panel" style="display: flex; gap: 30px; align-items: center;">
+          <a href="#hero" data-i18n="home.nav.home"
+            style="color: #31087b; font-weight: bold; border-bottom: 3px solid #31087b; padding-bottom: 6px; font-size: 16px;">首页</a>
+          <a href="#guide" id="openGuideNavBtn" data-i18n="home.nav.guide"
+            style="color: #475569; font-weight: 600; font-size: 16px; text-decoration: none;">玩法</a>
+          <a href="#players" id="openPlayersBtn" data-i18n="home.nav.players"
+            style="color: #475569; font-weight: 600; font-size: 16px; text-decoration: none;">球员</a>
+          <a href="#rules" data-i18n="home.nav.pool" style="color: #475569; font-weight: 600; font-size: 16px; text-decoration: none;">奖池</a>
+          <a href="#faq" id="openFaqBtn" data-i18n="home.nav.faq"
+            style="color: #475569; font-weight: 600; font-size: 16px; text-decoration: none;">FAQ</a>
+        </nav>
+
+        <div class="nav-actions" style="display: flex; gap: 15px;">
+          <div class="lang-switch" role="group" aria-label="Language switch">
+            <button type="button" class="lang-switch-btn is-active" data-lang-btn="zh-CN">中</button>
+            <button type="button" class="lang-switch-btn" data-lang-btn="en">EN</button>
+          </div>
+          <button id="connectBtn" class="btn" data-i18n="common.connectWallet"
+            style="background: white; color: #0f172a; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 20px; font-weight: bold; display: flex; align-items: center; gap: 8px; transition: all 0.2s;"><svg
+              viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>连接钱包</button>
+          <a href="./play.html" class="btn"
+            style="background: #31087b; color: white; border-radius: 10px; padding: 10px 24px; font-weight: bold; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(49,8,123,0.3); text-decoration: none;"><svg
+              viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 21h8"></path>
+              <path d="M12 17v4"></path>
+              <path d="M7 4h10v5.5A4.5 4.5 0 0 1 12 14v0a4.5 4.5 0 0 1-5-4.5V4z"></path>
+              <path d="M3 4h4v5.5A4.5 4.5 0 0 0 11.5 14"></path>
+              <path d="M21 4h-4v5.5A4.5 4.5 0 0 1 12.5 14"></path>
+            </svg>立即开赛</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 0 20px;">
+    <!-- Hero Section -->
+    <section id="hero" class="home-hero"
+      style="display: flex; align-items: center; padding: 60px 40px; position: relative; background: #ffffff; border-radius: 24px; margin-top: 0; overflow: hidden; min-height: 340px;">
+
+      <!-- 内容层 -->
+      <div class="home-hero-copy"
+        style="flex: 1; z-index: 2; position: relative; max-width: 900px; padding-left: 20px;">
+        <h1 data-i18n-html="home.hero.title"
+          style="font-size: 64px; font-weight: 900; font-style: italic; line-height: 1.1; margin-bottom: 24px; letter-spacing: -2px; filter: drop-shadow(0 4px 15px rgba(255,255,255,0.9));">
+          <span
+            style="background: linear-gradient(135deg, #4f46e5 0%, #1e1b4b 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">世界杯</span><span
+            style="color: #0f172a;">链上博弈养成游戏</span>
+        </h1>
+        <p
+          style="font-size: 20px; color: #1e293b; margin-bottom: 40px; font-weight: 700; display: flex; align-items: center; gap: 14px; text-shadow: 0 2px 10px rgba(255,255,255,0.9);">
+          <span>签球员</span><span style="color:#22c55e; font-weight: 900;">·</span><span>排阵位</span><span
+            style="color:#22c55e; font-weight: 900;">·</span><span>集训</span><span
+            style="color:#22c55e; font-weight: 900;">·</span><span>挖人</span><span
+            style="color:#22c55e; font-weight: 900;">·</span><span>按积分分奖池</span>
+        </p>
+
+        <div class="home-hero-actions" style="display: flex; gap: 24px;">
+          <a href="./play.html" class="btn"
+            style="background: #31087b; color: white; border-radius: 12px; padding: 16px 40px; font-size: 18px; font-weight: bold; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 20px rgba(49, 8, 123, 0.3); text-decoration: none; transition: transform 0.2s;"><svg
+              viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 21h8"></path>
+              <path d="M12 17v4"></path>
+              <path d="M7 4h10v5.5A4.5 4.5 0 0 1 12 14v0a4.5 4.5 0 0 1-5-4.5V4z"></path>
+              <path d="M3 4h4v5.5A4.5 4.5 0 0 0 11.5 14"></path>
+              <path d="M21 4h-4v5.5A4.5 4.5 0 0 1 12.5 14"></path>
+            </svg>立即开赛</a>
+          <button id="openGuideBtn" class="btn" type="button"
+            style="background: white; color: #31087b; border: 2px solid #31087b; border-radius: 12px; padding: 14px 40px; font-size: 18px; font-weight: bold; display: flex; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(255,255,255,0.5); transition: all 0.2s; cursor: pointer;"><svg
+              viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="10 8 16 12 10 16 10 8"></polygon>
+            </svg>查看玩法</button>
+        </div>
+      </div>
+
+      <!-- 右侧图片层 -->
+      <div class="home-hero-visual"
+        style="position: absolute; right: 0; top: 0; bottom: 0; width: 50%; display: flex; justify-content: flex-end; align-items: center; z-index: 1;">
+        <img src="./jpg/素材/首图.webp" alt="Soccer Background"
+          style="height: 120%; max-width: none; object-fit: contain; transform: translateX(5%); opacity: 0.95;" />
+      </div>
+    </section>
+
+    <!-- Features Bar (Merged into one wide card) -->
+    <section id="guide" class="home-feature-wrap"
+      style="margin-top: -30px; position: relative; z-index: 10; margin-bottom: 20px;">
+      <div class="home-feature-bar"
+        style="background: white; border-radius: 20px; padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 1px solid #f8fafc;">
+        <div style="display: flex; align-items: center; flex: 1;">
+          <div style="margin-right: 15px;"><img src="./jpg/news/签球员.webp"
+              style="width: 72px; height: 72px; object-fit: contain;" alt="签球员" /></div>
+          <div>
+            <h4 style="margin:0 0 4px; color:#0f172a; font-size: 18px; font-weight: bold;">签球员</h4>
+            <p style="margin:0; color:#64748b; font-size: 13px; line-height: 1.4;">自由签约各类球员<br />组建你的梦幻阵容</p>
+          </div>
+        </div>
+        <div style="width: 1px; height: 50px; background: #e2e8f0; margin: 0 20px;"></div>
+
+        <div style="display: flex; align-items: center; flex: 1;">
+          <div style="margin-right: 15px;"><img src="./jpg/news/排阵位.webp"
+              style="width: 72px; height: 72px; object-fit: contain;" alt="排阵位" /></div>
+          <div>
+            <h4 style="margin:0 0 4px; color:#0f172a; font-size: 18px; font-weight: bold;">排阵位</h4>
+            <p style="margin:0; color:#64748b; font-size: 13px; line-height: 1.4;">灵活安排阵位<br />激发球员最大潜能</p>
+          </div>
+        </div>
+        <div style="width: 1px; height: 50px; background: #e2e8f0; margin: 0 20px;"></div>
+
+        <div style="display: flex; align-items: center; flex: 1;">
+          <div style="margin-right: 15px;"><img src="./jpg/news/集训提效.webp"
+              style="width: 72px; height: 72px; object-fit: contain;" alt="集训提效" /></div>
+          <div>
+            <h4 style="margin:0 0 4px; color:#0f172a; font-size: 18px; font-weight: bold;">集训提效</h4>
+            <p style="margin:0; color:#64748b; font-size: 13px; line-height: 1.4;">提升球员效率<br />赢取更多积分</p>
+          </div>
+        </div>
+        <div style="width: 1px; height: 50px; background: #e2e8f0; margin: 0 20px;"></div>
+
+        <div style="display: flex; align-items: center; flex: 1;">
+          <div style="margin-right: 15px;"><img src="./jpg/news/挖人博弈.webp"
+              style="width: 72px; height: 72px; object-fit: contain;" alt="挖人博弈" /></div>
+          <div>
+            <h4 style="margin:0 0 4px; color:#0f172a; font-size: 18px; font-weight: bold;">挖人博弈</h4>
+            <p style="margin:0; color:#64748b; font-size: 13px; line-height: 1.4;">防控守住核心<br />挖人增强实力</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Flow -->
+    <div class="home-flow-card"
+      style="background: white; border-radius: 16px; padding: 24px 30px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #f8fafc;">
+      <h3 style="margin:0 0 20px; color: #1e3a8a; font-size: 18px; display: flex; align-items: center;"><span
+          style="margin-right:8px; color: #3b82f6;">⚽</span>玩法流程</h3>
+      <div class="home-flow-row" style="display: flex; justify-content: space-between; align-items: center;">
+        <!-- Step 1 -->
+        <div style="display: flex; align-items: center;">
+          <div
+            style="background: #3b0764; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 14px; font-weight: bold; margin-right: 12px; box-shadow: 0 2px 6px rgba(59,7,100,0.3);">
+            1</div>
+          <div>
+            <h5 style="margin:0 0 4px; color:#0f172a; font-size: 15px; font-weight: bold;">获得资格</h5>
+            <p style="margin:0; font-size:12px; color:#64748b;">持有资格后进入赛季</p>
+          </div>
+        </div>
+        <div style="color: #cbd5e1; font-weight: bold; font-size: 18px;">&gt;</div>
+
+        <!-- Step 2 -->
+        <div style="display: flex; align-items: center;">
+          <div
+            style="background: white; color: #3b0764; border: 2px solid #3b0764; width: 24px; height: 24px; border-radius: 50%; text-align: center; line-height: 24px; font-size: 14px; font-weight: bold; margin-right: 12px;">
+            2</div>
+          <div>
+            <h5 style="margin:0 0 4px; color:#0f172a; font-size: 15px; font-weight: bold;">签约球员</h5>
+            <p style="margin:0; font-size:12px; color:#64748b;">三种球员，自由选择</p>
+          </div>
+        </div>
+        <div style="color: #cbd5e1; font-weight: bold; font-size: 18px;">&gt;</div>
+
+        <!-- Step 3 -->
+        <div style="display: flex; align-items: center;">
+          <div
+            style="background: white; color: #3b0764; border: 2px solid #3b0764; width: 24px; height: 24px; border-radius: 50%; text-align: center; line-height: 24px; font-size: 14px; font-weight: bold; margin-right: 12px;">
+            3</div>
+          <div>
+            <h5 style="margin:0 0 4px; color:#0f172a; font-size: 15px; font-weight: bold;">安排阵位</h5>
+            <p style="margin:0; font-size:12px; color:#64748b;">定位上阵，开始养成</p>
+          </div>
+        </div>
+        <div style="color: #cbd5e1; font-weight: bold; font-size: 18px;">&gt;</div>
+
+        <!-- Step 4 -->
+        <div style="display: flex; align-items: center;">
+          <div
+            style="background: white; color: #3b0764; border: 2px solid #3b0764; width: 24px; height: 24px; border-radius: 50%; text-align: center; line-height: 24px; font-size: 14px; font-weight: bold; margin-right: 12px;">
+            4</div>
+          <div>
+            <h5 style="margin:0 0 4px; color:#0f172a; font-size: 15px; font-weight: bold;">集训提效</h5>
+            <p style="margin:0; font-size:12px; color:#64748b;">缩短时间，提升积分</p>
+          </div>
+        </div>
+        <div style="color: #cbd5e1; font-weight: bold; font-size: 18px;">&gt;</div>
+
+        <!-- Step 5 -->
+        <div style="display: flex; align-items: center;">
+          <div
+            style="background: white; color: #3b0764; border: 2px solid #3b0764; width: 24px; height: 24px; border-radius: 50%; text-align: center; line-height: 24px; font-size: 14px; font-weight: bold; margin-right: 12px;">
+            5</div>
+          <div>
+            <h5 style="margin:0 0 4px; color:#0f172a; font-size: 15px; font-weight: bold;">防挖 / 挖人</h5>
+            <p style="margin:0; font-size:12px; color:#64748b;">保护阵位，也可主动挖人</p>
+          </div>
+        </div>
+        <div style="color: #cbd5e1; font-weight: bold; font-size: 18px;">&gt;</div>
+
+        <!-- Step 6 -->
+        <div style="display: flex; align-items: center;">
+          <div
+            style="background: #3b0764; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 14px; font-weight: bold; margin-right: 12px; box-shadow: 0 2px 6px rgba(59,7,100,0.3);">
+            6</div>
+          <div>
+            <h5 style="margin:0 0 4px; color:#0f172a; font-size: 15px; font-weight: bold;">赛季结算</h5>
+            <p style="margin:0; font-size:12px; color:#64748b;">按积分占比分配奖池</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom 3 Cols -->
+    <div class="home-bottom-grid" style="display: flex; gap: 20px; align-items: stretch; margin-bottom: 40px;">
+      <!-- Core Params -->
+      <div
+        style="flex: 1.2; background: white; border-radius: 20px; padding: 18px 18px 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #e8ebf3;">
+        <h3
+          style="margin:0 0 14px; color: #312e81; font-size: 18px; font-weight: 900; display: flex; align-items: center; letter-spacing: -0.5px;">
+          <span style="margin-right:8px; color:#4338ca; font-size:18px;">⚽</span>核心参数
+        </h3>
+
+        <div
+          style="display:flex; background:#fff; border:1px solid #e7eaf3; border-radius:16px; overflow:hidden; min-height:168px;">
+          <div
+            style="flex:1; padding:18px 8px 16px; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; text-align:center;">
+            <img src="./jpg/news/核心参数/阵位.webp" style="height:42px; object-fit:contain; margin-bottom:16px;"
+              alt="默认阵位" />
+            <div style="color:#111827; font-size:12px; font-weight:800; margin-bottom:12px;">默认阵位</div>
+            <div style="color:#312e81; font-size:24px; font-weight:900; line-height:1;">3</div>
+          </div>
+          <div style="width:1px; background:#edf0f6;"></div>
+          <div
+            style="flex:1; padding:18px 8px 16px; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; text-align:center;">
+            <img src="./jpg/news/核心参数/阵位.webp" style="height:42px; object-fit:contain; margin-bottom:16px;"
+              alt="最大阵位" />
+            <div style="color:#111827; font-size:12px; font-weight:800; margin-bottom:12px;">最大阵位</div>
+            <div style="color:#312e81; font-size:24px; font-weight:900; line-height:1;">8</div>
+          </div>
+          <div style="width:1px; background:#edf0f6;"></div>
+          <div
+            style="flex:1.15; padding:18px 8px 16px; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; text-align:center;">
+            <img src="./jpg/news/核心参数/赛季时长.webp" style="height:42px; object-fit:contain; margin-bottom:16px;"
+              alt="赛季时长" />
+            <div style="color:#111827; font-size:12px; font-weight:800; margin-bottom:12px;">赛季时长</div>
+            <div style="color:#312e81; font-size:19px; font-weight:900; line-height:1; white-space:nowrap;">1小时 / 期
+            </div>
+          </div>
+          <div style="width:1px; background:#edf0f6;"></div>
+          <div
+            style="flex:1.05; padding:18px 8px 14px; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; text-align:center;">
+            <img src="./jpg/news/核心参数/防挖价格.webp" style="height:42px; object-fit:contain; margin-bottom:16px;"
+              alt="防挖价格" />
+            <div style="color:#111827; font-size:12px; font-weight:800; margin-bottom:10px;">防挖价格</div>
+            <div style="color:#312e81; font-size:20px; font-weight:900; line-height:1;">0.003</div>
+            <div style="color:#111827; font-size:12px; font-weight:900; line-height:1.2; margin-top:6px;">BNB</div>
+          </div>
+          <div style="width:1px; background:#edf0f6;"></div>
+          <div
+            style="flex:1; padding:18px 8px 16px; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; text-align:center;">
+            <img src="./jpg/news/核心参数/推荐奖励.webp" style="height:42px; object-fit:contain; margin-bottom:16px;"
+              alt="推荐奖励" />
+            <div style="color:#111827; font-size:12px; font-weight:800; margin-bottom:12px;">推荐奖励</div>
+            <div style="color:#312e81; font-size:24px; font-weight:900; line-height:1;">+5%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tiers -->
+      <div
+        style="flex: 1.5; background: white; border-radius: 20px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid #f8fafc;">
+        <h3
+          style="margin:0 0 15px; color: #0f172a; font-size: 16px; font-weight: bold; display: flex; align-items: center;">
+          <span style="margin-right:8px; color: #3b82f6;">⚽</span>球员档位
+        </h3>
+        <div style="display: flex; gap: 12px;">
+          <div
+            style="flex:1; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 12px; text-align: center;">
+            <div
+              style="background:#22c55e; color:white; width:28px; height:28px; line-height:28px; border-radius:8px; margin: 0 auto 8px; font-weight:bold;">
+              T1</div>
+            <h5 style="margin:0 0 4px; color:#166534; font-size: 13px; font-weight: bold;">青训新秀 / 快节奏</h5>
+            <p style="margin:0; font-size:11px; color:#15803d;">低成本 | 快成长</p>
+          </div>
+          <div
+            style="flex:1; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 12px; padding: 12px; text-align: center;">
+            <div
+              style="background:#3b82f6; color:white; width:28px; height:28px; line-height:28px; border-radius:8px; margin: 0 auto 8px; font-weight:bold;">
+              T2</div>
+            <h5 style="margin:0 0 4px; color:#1e3a8a; font-size: 13px; font-weight: bold;">主力球员 / 均衡型</h5>
+            <p style="margin:0; font-size:11px; color:#1d4ed8;">中收益 | 稳定成长</p>
+          </div>
+          <div
+            style="flex:1; background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 12px; padding: 12px; text-align: center;">
+            <div
+              style="background:#a855f7; color:white; width:28px; height:28px; line-height:28px; border-radius:8px; margin: 0 auto 8px; font-weight:bold;">
+              T3</div>
+            <h5 style="margin:0 0 4px; color:#581c87; font-size: 13px; font-weight: bold;">明星球员 / 高积分</h5>
+            <p style="margin:0; font-size:11px; color:#7e22ce;">高积分 | 高价值</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rewards -->
+      <div
+        style="flex: 1; background: #2f0885; border-radius: 20px; padding: 24px; color: white; display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: 0 10px 20px rgba(47,8,133,0.2);">
+
+        <!-- 背景点缀星光 (可选，为了还原图中的细节点缀) -->
+        <div
+          style="position: absolute; top: 30px; left: 10px; width: 4px; height: 4px; background: white; border-radius: 50%; box-shadow: 0 0 10px white; opacity: 0.8;">
+        </div>
+        <div
+          style="position: absolute; top: 70px; left: 130px; width: 3px; height: 3px; background: white; border-radius: 50%; box-shadow: 0 0 10px white; opacity: 0.6;">
+        </div>
+        <div
+          style="position: absolute; bottom: 30px; right: 20px; width: 4px; height: 4px; background: white; border-radius: 50%; box-shadow: 0 0 10px white; opacity: 0.8;">
+        </div>
+
+        <h3
+          style="margin:0 0 20px; font-size: 16px; font-weight: bold; display: flex; align-items: center; z-index: 1;">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"
+            style="margin-right:8px;">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="4"></circle>
+            <line x1="21.17" y1="8" x2="12" y2="8"></line>
+            <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+            <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+          </svg>奖励机制
+        </h3>
+
+        <div style="display: flex; align-items: stretch; gap: 20px; z-index: 1; flex: 1;">
+          <!-- 奖杯图标 -->
+          <div style="width: 130px; display: flex; justify-content: center; align-items: center;">
+            <img src="./jpg/news/奖杯.webp"
+              style="width: 100%; object-fit: contain; filter: drop-shadow(0 8px 10px rgba(0,0,0,0.4)); transform: scale(1.15); transform-origin: bottom;"
+              alt="奖杯" />
+          </div>
+
+          <!-- 右侧计算公式面板 -->
+          <div
+            style="background: white; color: #0f172a; padding: 20px 16px; border-radius: 12px; flex: 1; text-align: center; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            <div style="font-weight: 900; font-size: 16px;">个人奖励</div>
+            <div style="font-size: 24px; font-weight: 900; line-height: 1;">=</div>
+            <div
+              style="display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 13px; font-weight: bold;">
+
+              <div
+                style="border: 1px solid #e2e8f0; padding: 12px 10px; border-radius: 8px; flex: 1; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+                <svg viewBox="0 0 24 24" width="22" height="22" stroke="#475569" stroke-width="2" fill="none">
+                  <circle cx="12" cy="8" r="7"></circle>
+                  <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                </svg>
+                <span>本期奖池</span>
+              </div>
+
+              <div style="font-size: 18px; color: #0f172a; font-weight: 900;">×</div>
+
+              <div
+                style="border: 1px solid #e2e8f0; padding: 12px 10px; border-radius: 8px; flex: 1; display: flex; flex-direction: column; gap: 8px; align-items: center;">
+                <svg viewBox="0 0 24 24" width="22" height="22" stroke="#475569" stroke-width="2" fill="none">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>个人积分占比</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer
+      style="display: flex; justify-content: space-between; align-items: center; padding: 30px 0; margin-top: 40px; border-top: 1px solid #e2e8f0;">
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <img src="./jpg/logo.webp" alt="Soccer" style="width: 32px;" />
+          <strong style="color: #1e3a8a; font-style: italic; font-size: 20px; font-weight: 900;">Soccer</strong>
+        </div>
+        <span style="color: #64748b; font-size: 14px;">世界杯链上博弈养成游戏</span>
+        <div style="display: flex; gap: 12px; margin-left: 10px;">
+          <a href="https://x.com/soccer_bnbchain" target="_blank" rel="noopener noreferrer" style="color: #94a3b8;"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
+              stroke-width="2" fill="none">
+              <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+              <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+            </svg></a>
+          <a href="https://t.me/soccervault_community" target="_blank" rel="noopener noreferrer" style="color: #94a3b8;"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor"
+              stroke-width="2" fill="none">
+              <path d="M15 10l-4 4l6 6l4 -16l-18 7l4 2l2 6l3 -4"></path>
+            </svg></a>
+        </div>
+      </div>
+      <div style="color: #64748b; font-size: 14px; display: flex; gap: 24px; align-items: center;">
+        <span>© 2026 Soccer. All rights reserved.</span>
+        <a href="#" style="color: #64748b; text-decoration: none;">文档</a>
+        <a href="#" style="color: #64748b; text-decoration: none;">社区</a>
+        <a href="#" style="color: #64748b; text-decoration: none;">条款</a>
+        <a href="#" style="color: #64748b; text-decoration: none;">隐私</a>
+      </div>
+    </footer>
+  </main>
+
+  <div id="guideModal" class="guide-modal hidden">
+    <div class="guide-panel guide-panel-large">
+      <button id="closeGuideBtn" class="guide-close" type="button">×</button>
+      <div class="guide-hero-card">
+        <div class="guide-badge">Soccer 绿茵联赛</div>
+        <h3>联赛玩法</h3>
+        <p class="guide-slogan">签球员、排阵位、集训提效、挖人博弈，按赛季积分分奖池。</p>
+        <p class="guide-intro">一套围绕世界杯热点打造的链上足球经理联赛。你需要配置阵容、抢节奏、守核心、冲积分，去争夺每赛季释放的 BNB 奖励。</p>
+        <div class="guide-metrics">
+          <div class="guide-metric"><span>默认阵位</span><strong>3</strong></div>
+          <div class="guide-metric"><span>最大阵位</span><strong>8</strong></div>
+          <div class="guide-metric"><span>赛季时长</span><strong>1小时</strong></div>
+          <div class="guide-metric"><span>奖池释放</span><strong>30%</strong></div>
+        </div>
+      </div>
+      <div class="guide-content guide-rich-content">
+        <div class="guide-section">
+          <h4>四步上手</h4>
+          <div class="guide-step-list">
+            <div class="guide-step"><b>01</b><span>持仓达标后进入联赛，获得基础阵位。</span></div>
+            <div class="guide-step"><b>02</b><span>签下三档球员，安排到对应阵位开赛。</span></div>
+            <div class="guide-step"><b>03</b><span>用集训提速、用防挖守核心，也能主动挖人。</span></div>
+            <div class="guide-step"><b>04</b><span>赛季结束按积分占比结算，领取 BNB 奖励。</span></div>
+          </div>
+        </div>
+        <div class="guide-section">
+          <h4>联赛模块</h4>
+          <div class="guide-feature-grid">
+            <div class="guide-feature-card">
+              <h4>阵容经营</h4>
+              <p>签球员、排阵位、扩名额，决定你的联赛上限。</p>
+            </div>
+            <div class="guide-feature-card">
+              <h4>节奏博弈</h4>
+              <p>集训缩短周期，抢占赛季节奏与积分窗口。</p>
+            </div>
+            <div class="guide-feature-card">
+              <h4>攻防对抗</h4>
+              <p>防挖保护核心收益，主动挖人扩大你的优势。</p>
+            </div>
+          </div>
+        </div>
+        <div class="guide-section">
+          <h4>奖励逻辑</h4>
+          <div class="guide-rule-grid">
+            <div class="guide-rule-card"><strong>奖池来源</strong>
+              <p>扩阵位、集训、防挖与补充资金共同进入联赛奖池。</p>
+            </div>
+            <div class="guide-rule-card"><strong>结算方式</strong>
+              <p>每赛季释放奖池 30%，按个人积分占比分配。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="./play.html" class="btn btn-primary btn-block">进入操作页</a>
+    </div>
+  </div>
+
+  <div id="playersModal" class="guide-modal hidden">
+    <div class="guide-panel players-panel">
+      <button id="closePlayersBtn" class="guide-close" type="button">×</button>
+      <div class="players-head">
+        <h3>热门球员</h3>
+        <p>世界杯热度球员资料卡，仅作首页展示使用。</p>
+      </div>
+      <div id="playersGrid" class="players-grid"></div>
+    </div>
+  </div>
+
+  <div id="faqModal" class="guide-modal hidden">
+    <div class="guide-panel faq-panel">
+      <button id="closeFaqBtn" class="guide-close" type="button">×</button>
+      <h3>常见问题 FAQ</h3>
+      <div class="faq-list">
+        <div class="faq-item">
+          <h4>Q：不花 BNB 能玩吗？</h4>
+          <p>可以签约球员并上阵，但如果不扩名额、不集训、不防挖，收益效率和防守能力会偏弱。</p>
+        </div>
+        <div class="faq-item">
+          <h4>Q：积分可以提现吗？</h4>
+          <p>积分本身不能提现，积分是奖励凭证。赛季结束后，按积分占比领取 BNB。</p>
+        </div>
+        <div class="faq-item">
+          <h4>Q：挖人会偷走我的球员吗？</h4>
+          <p>不会直接抢走你的球员，挖人截获的是你最终积分收益的一部分。</p>
+        </div>
+        <div class="faq-item">
+          <h4>Q：防挖条款有什么用？</h4>
+          <p>防挖条款可以降低被挖次数，尤其适合保护高价值阵位收益。</p>
+        </div>
+        <div class="faq-item">
+          <h4>Q：为什么奖池不会一次分光？</h4>
+          <p>因为系统每期只释放一部分，本期赛季和滚存奖池各释放 30%，剩余部分会滚入后续周期，保证后续持续有奖池。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="homeInfoModal" class="guide-modal hidden">
+    <div class="guide-panel home-info-panel">
+      <button id="closeHomeInfoBtn" class="guide-close" type="button">×</button>
+      <h3 id="homeInfoTitle">提示</h3>
+      <p id="homeInfoText" class="home-info-text">请先完成当前操作。</p>
+      <button id="confirmHomeInfoBtn" class="btn btn-primary btn-block" type="button">我知道了</button>
+    </div>
+  </div>
+
+  <script src="./js/i18n.js"></script>
+  <script src="./js/home.js"></script>
+</body>
+
+</html>

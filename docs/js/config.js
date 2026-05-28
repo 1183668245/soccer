@@ -36,6 +36,8 @@ let lastWalletEventAccount = "";
 let lastWalletEventAt = 0;
 let lastChainId = "";
 let lastChainEventAt = 0;
+const AUTO_REFRESH_MS = 20000;
+const ACTIVITY_POLL_MS = 30000;
 
 const $ = (id) => document.getElementById(id);
 const pageLoader = $("pageLoader");
@@ -422,7 +424,7 @@ async function backfillActivityFeed(targetCount = ACTIVITY_PREVIEW_ITEMS, rounds
   } finally { activityBackfillBusy = false; saveActivityCache(); }
 }
 async function pollActivityFeed() {
-  if (walletActionPending) return;
+  if (walletActionPending || document.hidden) return;
   setActivityScanStatus("联赛动态扫描中...");
   await initReadContracts();
   const contract = readVaultContract;
@@ -452,8 +454,9 @@ function startActivityFeed() {
   renderActivityFeed();
   pollActivityFeed().then(() => backfillActivityFeed(ACTIVITY_PREVIEW_ITEMS, 4)).catch((err) => log(`联赛动态刷新异常: ${getErrorMessage(err)}`, true));
   activityTimer = setInterval(() => {
+    if (document.hidden) return;
     pollActivityFeed().catch((err) => log(`联赛动态刷新异常: ${getErrorMessage(err)}`, true));
-  }, 15000);
+  }, ACTIVITY_POLL_MS);
 }
 
 function setConnectState(account) {
@@ -767,7 +770,7 @@ function startSeasonCountdown(endTime) {
 }
 
 async function refreshLivePanels() {
-  if (walletActionPending) return;
+  if (walletActionPending || document.hidden) return;
   const tasks = [];
   if (readVaultContract || vaultContract) {
     tasks.push(refreshVaultState().catch((err) => log(`金库状态刷新异常: ${err?.message || err}`, true)));
@@ -783,8 +786,9 @@ async function refreshLivePanels() {
 function startAutoRefresh() {
   clearInterval(autoRefreshTimer);
   autoRefreshTimer = setInterval(() => {
+    if (document.hidden) return;
     refreshLivePanels().catch((err) => log(`自动刷新异常: ${getErrorMessage(err)}`, true));
-  }, 10000);
+  }, AUTO_REFRESH_MS);
 }
 
 function stopAutoRefresh() {
@@ -1827,6 +1831,12 @@ function initPlayPage() {
     } finally {
       walletSyncBusy = false;
     }
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden || walletActionPending || !signer) return;
+    refreshLivePanels().catch((err) => log(`前台恢复刷新异常: ${getErrorMessage(err)}`, true));
+    pollActivityFeed().catch((err) => log(`前台恢复动态刷新异常: ${getErrorMessage(err)}`, true));
   });
 }
 

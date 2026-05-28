@@ -31,6 +31,11 @@ let walletProvider;
 let walletBusyTimer = null;
 let pendingTxHash = "";
 let txStatusTimer = null;
+let walletSyncBusy = false;
+let lastWalletEventAccount = "";
+let lastWalletEventAt = 0;
+let lastChainId = "";
+let lastChainEventAt = 0;
 
 const $ = (id) => document.getElementById(id);
 const pageLoader = $("pageLoader");
@@ -592,6 +597,7 @@ async function ensureWalletContext(account) {
   provider = new ethers.BrowserProvider(injected);
   signer = await provider.getSigner();
   userAddress = account;
+  lastChainId = String(await injected.request({ method: "eth_chainId" }).catch(() => ""));
   updateDebugState();
   await initContracts();
   $("walletAddress").textContent = formatAddress(userAddress);
@@ -1762,30 +1768,53 @@ function initPlayPage() {
 
   const injected = getWalletProvider();
   injected?.on?.("accountsChanged", async (accounts) => {
-    const account = accounts?.[0] || "";
-    userAddress = account;
-    setConnectState(account);
-    $("walletAddress").textContent = formatAddress(account);
-    $("plotUserAddress").placeholder = account || "默认当前钱包地址";
+    const account = String(accounts?.[0] || "");
+    const now = Date.now();
+    if (walletSyncBusy) return;
+    if (account && account.toLowerCase() === String(userAddress || "").toLowerCase() && (now - lastWalletEventAt) < 5000) {
+      log("检测到重复账户事件，已跳过本次刷新");
+      return;
+    }
+    walletSyncBusy = true;
+    lastWalletEventAccount = account.toLowerCase();
+    lastWalletEventAt = now;
+    try {
+      userAddress = account;
+      setConnectState(account);
+      $("walletAddress").textContent = formatAddress(account);
+      $("plotUserAddress").placeholder = account || "默认当前钱包地址";
 
-    if (account) {
-      await ensureWalletContext(account);
-      startAutoRefresh();
-      startActivityFeed();
-      await refreshAll();
-      updateCurrentActionGuide();
-    } else {
-      signer = undefined;
-      provider = undefined;
-      vaultContract = undefined;
-      tokenContract = undefined;
-      if ($("mySeasonTickets")) $("mySeasonTickets").textContent = "-";
-      updateReferrerBindingUI("");
-      await renderPondCards();
-      updateCurrentActionGuide();
+      if (account) {
+        await ensureWalletContext(account);
+        startAutoRefresh();
+        startActivityFeed();
+        await refreshAll();
+        updateCurrentActionGuide();
+      } else {
+        signer = undefined;
+        provider = undefined;
+        vaultContract = undefined;
+        tokenContract = undefined;
+        if ($("mySeasonTickets")) $("mySeasonTickets").textContent = "-";
+        updateReferrerBindingUI("");
+        await renderPondCards();
+        updateCurrentActionGuide();
+      }
+    } finally {
+      walletSyncBusy = false;
     }
   });
-  injected?.on?.("chainChanged", async () => {
+  injected?.on?.("chainChanged", async (chainId) => {
+    const nextChainId = String(chainId || "");
+    const now = Date.now();
+    if (walletSyncBusy) return;
+    if (nextChainId && nextChainId === lastChainId && (now - lastChainEventAt) < 5000) {
+      log("检测到重复网络事件，已跳过本次刷新");
+      return;
+    }
+    walletSyncBusy = true;
+    lastChainEventAt = now;
+    lastChainId = nextChainId || lastChainId;
     try {
       log("检测到网络状态变化，正在重新同步页面...");
       stopAutoRefresh();
@@ -1795,6 +1824,8 @@ function initPlayPage() {
       toast("网络状态已更新");
     } catch (err) {
       log(`网络切换后重连失败: ${getErrorMessage(err)}`, true);
+    } finally {
+      walletSyncBusy = false;
     }
   });
 }

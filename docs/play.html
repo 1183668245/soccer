@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soccer绿茵联赛 - 操作台</title>
+  <link rel="icon" type="image/webp" href="./jpg/favicon.ico.webp" />
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body class="play-page play-entering">
+  <div id="pageLoader" class="page-loader">
+    <div class="page-loader-center">
+      <img class="page-loader-logo" src="./jpg/logo.webp" alt="Soccer绿茵联赛" />
+      <div class="page-loader-title">正在进入绿茵联赛</div>
+      <div class="page-loader-spinner"></div>
+    </div>
+  </div>
+
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="sea-bubbles" aria-hidden="true">
+    <span class="bubble bubble-1"></span>
+    <span class="bubble bubble-2"></span>
+    <span class="bubble bubble-3"></span>
+    <span class="bubble bubble-4"></span>
+    <span class="bubble bubble-5"></span>
+    <span class="bubble bubble-6"></span>
+    <span class="bubble bubble-7"></span>
+    <span class="bubble bubble-8"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="container nav">
+      <div class="brand">
+        <img class="brand-logo-img" src="./jpg/logo.webp" alt="Soccer绿茵联赛" />
+        <div class="brand-text">Soccer绿茵联赛</div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="./index.html">返回首页</a>
+        <a href="#actions" class="active">我的联赛</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="connectBtn" class="btn btn-dark">连接钱包</button>
+        <button id="refreshAllBtn" class="btn btn-primary">同步数据</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div id="debugStateBar" class="debug-state-bar">
+      <span id="debugWalletState" class="debug-chip">钱包：待识别</span>
+      <span id="debugContractState" class="debug-chip">合约：待初始化</span>
+      <span id="debugPondState" class="debug-chip">阵容：待渲染</span>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="overview-grid overview-grid-top">
+      <div class="panel top-stat-card wallet-stat-card">
+        <div class="top-stat-head"><span class="top-stat-icon is-wallet"><img src="./jpg/游戏/钱包.webp" alt="我的钱包" /></span><div><strong>我的钱包</strong></div></div>
+        <div class="top-stat-main"><strong id="nativeBalance" class="top-stat-value">-</strong><span class="top-stat-unit">BNB</span></div>
+        <div class="top-stat-note wallet-main-note">钱包余额</div>
+        <div class="wallet-balance-block">
+          <div class="wallet-balance-copy"><strong id="tokenBalance">-</strong><span>代币余额</span></div>
+          <div id="walletEligibility" class="wallet-eligibility is-pending">
+            <img id="walletEligibilityIcon" src="./jpg/游戏/未达标.webp" alt="参与资格" />
+            <span id="walletEligibilityText">资格识别中</span>
+          </div>
+        </div>
+        <span id="walletAddress" class="wallet-address-ghost">未连接</span>
+      </div>
+
+      <div class="panel top-stat-card season-stat-card">
+        <div class="top-stat-head"><span class="top-stat-icon is-season"><img src="./jpg/游戏/赛季.webp" alt="赛季状态" /></span><div><strong>赛季状态</strong><span>当前赛季</span></div></div>
+        <div class="top-stat-main"><strong id="seasonId" class="top-stat-value">-</strong><span class="top-stat-unit">赛季</span></div>
+        <div class="top-stat-sub"><span>剩余时间</span><strong id="seasonEndTime">-</strong></div>
+        <div class="top-stat-note" id="seasonEndAt">结束于 --:--</div>
+        <div class="season-progress"><span id="seasonProgressFill" class="season-progress-fill"></span></div>
+      </div>
+
+      <div class="panel top-stat-card glory-stat-card">
+        <div class="top-stat-head"><span class="top-stat-icon is-glory"><img src="./jpg/游戏/荣誉池.webp" alt="荣耀奖池" /></span><div><strong>荣耀奖池</strong><span>当前可领奖池</span></div></div>
+        <div class="top-stat-main"><strong id="vaultBalance" class="top-stat-value">-</strong><span class="top-stat-unit">BNB</span></div>
+        <div class="top-stat-sub"><span>本赛季可分奖池</span><strong id="vaultDistributable">-</strong></div>
+        <div class="top-stat-sub"><span>本赛季总积分</span><strong id="seasonTickets">-</strong></div>
+        <div class="top-stat-sub"><span>本赛季个人积分</span><strong id="mySeasonTickets">-</strong></div>
+      </div>
+
+      <div class="panel top-stat-card team-stat-card">
+        <div class="top-stat-head"><span class="top-stat-icon is-team"><img src="./jpg/游戏/球队状态.webp" alt="球队状态" /></span><div><strong>球队状态</strong><span>阵容与球员</span></div></div>
+        <div class="top-stat-main"><strong id="teamLineupStat" class="top-stat-value">0 / 8</strong><span class="top-stat-unit">阵位</span></div>
+        <div class="team-stat-footer"><div class="top-stat-row"><div class="top-mini-metric"><span>已签约球员</span><strong id="teamSignedStat">0 人</strong></div><div class="top-mini-metric"><span>可上阵球员</span><strong id="teamAvailableStat">0 人</strong></div></div><button id="buyLandBtn" class="btn btn-dark btn-small top-stat-action">扩充阵位</button></div>
+      </div>
+    </section>
+
+    <!-- 新增：游戏化大厅核心区 -->
+    <section class="game-hall-section">
+      <div class="game-hall-layout">
+        <!-- 左侧：商城区域 -->
+        <div class="game-shop-area panel">
+          <div class="shop-title-row">
+            <div class="panel-title shop-title">球员招募</div>
+            <button id="openRulesModalBtn" class="shop-title-note" type="button">规则说明</button>
+          </div>
+          <div class="shop-selected-box">
+            <div class="shop-selected-head">
+              <strong id="selectedSeedName">已选：青训球员</strong>
+              <span id="selectedSeedInventory">可上阵 0 人</span>
+            </div>
+            <div id="selectedSeedSummary" class="shop-selected-summary">请选择球员后签约，再安排到空闲阵位参赛。</div>
+          </div>
+          <div id="seedCards" class="seed-grid">
+            <!-- JS 动态渲染三档球员卡片 -->
+          </div>
+          <div class="shop-action-box">
+            <label>签约数量</label>
+            <div class="quantity-stepper">
+              <button id="buySeedMinusBtn" class="quantity-btn" type="button">−</button>
+              <input id="buySeedAmount" class="input quantity-input" type="number" min="1" value="1" />
+              <button id="buySeedPlusBtn" class="quantity-btn" type="button">+</button>
+            </div>
+            <button id="buySeedBtn" class="btn btn-primary btn-block">签约球员</button>
+          </div>
+
+          <div class="shop-activity-box">
+            <div class="shop-activity-head">
+              <strong>联赛动态</strong>
+              <div class="shop-activity-actions">
+                <span>最近 100 条</span>
+                <button id="openActivityModalBtn" class="btn btn-dark btn-small" type="button">查看更多</button>
+              </div>
+            </div>
+            <div id="activityList" class="activity-list activity-list-preview"></div>
+            <div id="activityScanStatus" class="action-note">联赛动态扫描准备中...</div>
+          </div>
+        </div>
+
+        <!-- 中间：我的阵容核心区 -->
+        <div class="game-fishery-area panel">
+          <div class="fishery-header">
+            <div class="panel-title fishery-title">🏟️ 我的阵容 <span id="lineupCountBadge" class="lineup-count-badge">0/8</span><small>阵容管理与赛季得分</small></div>
+          </div>
+          <div id="actionGuideBar" class="action-guide-bar">
+            <strong id="actionGuideTitle">下一步：选择球员</strong>
+            <span id="actionGuideText">先签球员，再安排到空闲阵位参赛。</span>
+          </div>
+          <div id="pondLoading" class="pond-loading is-active">
+            <div class="pond-loading-spinner"></div>
+            <strong id="pondLoadingTitle">正在识别钱包状态</strong>
+            <span id="pondLoadingText">正在同步你的阵容与链上数据...</span>
+          </div>
+          <div id="pondCards" class="pond-grid">
+            <!-- JS 动态渲染已解锁阵位 -->
+          </div>
+          <div id="lockedSlotsSection" class="locked-slots-section">
+            <div class="locked-slots-head">
+              <strong>未解锁阵位</strong>
+              <span>扩充参赛名额后逐步开放更多阵位</span>
+            </div>
+            <div id="lockedPondCards" class="locked-pond-grid"></div>
+          </div>
+        </div>
+
+        <!-- 右侧：挖人 / 奖励 / 推荐 -->
+        <div class="game-radar-area">
+          <div class="panel radar-panel">
+            <div class="panel-title">🎯 发起挖人</div>
+            <div class="action-note">单次消耗 1000 代币。</div>
+            <button id="openObserveDrawerBtn" class="btn btn-dark btn-block">打开目标榜单</button>
+            <label>目标玩家地址</label>
+            <input id="stealTarget" class="input" placeholder="0x..." />
+            <label>目标阵位</label>
+            <div class="quantity-stepper steal-stepper">
+              <button id="stealPlotMinusBtn" class="quantity-btn" type="button">−</button>
+              <input id="stealPlotId" class="input quantity-input" type="number" min="1" value="1" />
+              <button id="stealPlotPlusBtn" class="quantity-btn" type="button">+</button>
+            </div>
+            <button id="stealBtn" class="btn btn-danger btn-block">发起挖人</button>
+          </div>
+
+
+          <div class="panel">
+            <div class="panel-title">💰 领取赛季奖励</div>
+            <div class="action-note">赛季结束后，按本赛季积分占比领取 BNB 奖励。</div>
+            <label>赛季编号</label>
+            <input id="claimSeasonId" class="input" type="number" min="1" value="1" />
+            <button id="claimBtn" class="btn btn-primary btn-block">领取奖励</button>
+          </div>
+          
+          <div class="panel">
+            <div class="panel-title">🤝 绑定推荐人</div>
+            <div class="action-note">每个地址仅可绑定一次推荐关系，推荐奖励为额外新增积分。</div>
+            <input id="referrerAddress" class="input" placeholder="输入推荐人地址" />
+            <div id="referrerStatus" class="action-note">当前未绑定推荐人。</div>
+            <button id="bindReferrerBtn" class="btn btn-dark btn-block">绑定推荐人</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 隐藏原有的表单操作区和状态读取区 -->
+    <section id="actions" class="section" style="display: none;">
+      <div class="section-head">
+        <h2>核心操作</h2>
+        <p>这里是交易和读取主界面，连接钱包后可直接进行签约球员、安排上阵、发起挖人和领取奖励。</p>
+      </div>
+
+      <div class="action-grid">
+        <div class="panel">
+          <div class="panel-title">绑定推荐人</div>
+          <label>推荐人地址</label>
+          <input id="referrerAddress" class="input" placeholder="0x..." />
+          <button id="bindReferrerBtn" class="btn btn-primary btn-block">绑定推荐人</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">签约球员</div>
+          <label>球员类型</label>
+          <select id="buySeedType" class="input">
+            <option value="0">0 - 青训新秀</option>
+            <option value="1">1 - 主力球员</option>
+            <option value="2">2 - 明星球员</option>
+          </select>
+          <label>购买数量</label>
+          <input id="buySeedAmount" class="input" type="number" min="1" value="1" />
+          <label>总代币成本</label>
+          <input id="buySeedTokenCost" class="input" placeholder="例如 10000" />
+          <div class="helper-row">
+            <button id="fillBuyCostBtn" class="btn btn-dark btn-small">自动计算成本</button>
+          </div>
+          <button id="buySeedBtn" class="btn btn-primary btn-block">签约球员</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">安排上阵</div>
+          <label>阵位编号</label>
+          <input id="plantPlotId" class="input" type="number" min="0" value="0" />
+          <label>球员类型</label>
+          <select id="plantSeedType" class="input">
+            <option value="0">0 - 青训新秀</option>
+            <option value="1">1 - 主力球员</option>
+            <option value="2">2 - 明星球员</option>
+          </select>
+          <button id="plantBtn" class="btn btn-primary btn-block">安排上阵</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">扩充参赛名额</div>
+          <label>支付 BNB</label>
+          <input id="buyLandValue" class="input" placeholder="例如 0.005" />
+          <button id="buyLandBtn" class="btn btn-primary btn-block">扩充参赛名额</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">集训</div>
+          <label>阵位编号</label>
+          <input id="fertilizePlotId" class="input" type="number" min="0" value="0" />
+          <label>支付 BNB</label>
+          <input id="fertilizeValue" class="input" placeholder="例如 0.001" />
+          <button id="fertilizeBtn" class="btn btn-primary btn-block">开启集训</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">设置防挖条款</div>
+          <label>阵位编号</label>
+          <input id="scarecrowPlotId" class="input" type="number" min="0" value="0" />
+          <label>支付 BNB</label>
+          <input id="scarecrowValue" class="input" placeholder="例如 0.003" value="0.003" />
+          <button id="scarecrowBtn" class="btn btn-primary btn-block">设置防挖条款</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">发起挖人</div>
+          <label>目标地址</label>
+          <input id="stealTarget" class="input" placeholder="0x..." />
+          <label>目标阵位编号</label>
+          <input id="stealPlotId" class="input" type="number" min="0" value="0" />
+          <label>总代币成本</label>
+          <input id="stealTokenCost" class="input" placeholder="固定 1000" value="1000" />
+          <button id="stealBtn" class="btn btn-danger btn-block">发起挖人</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">赛后结算</div>
+          <label>阵位编号</label>
+          <input id="harvestPlotId" class="input" type="number" min="0" value="0" />
+          <button id="harvestBtn" class="btn btn-primary btn-block">赛后结算</button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">领取赛季奖励</div>
+          <label>赛季编号</label>
+          <input id="claimSeasonId" class="input" type="number" min="1" value="1" />
+          <button id="claimBtn" class="btn btn-primary btn-block">领取赛季奖励</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="status" class="section" style="display: none;">
+      <div class="section-head">
+        <h2>玩家状态</h2>
+        <p>读取已签约球员和阵位状态，方便确认当前能否上阵、赛后结算或继续集训。</p>
+      </div>
+
+      <div class="status-grid">
+        <div class="panel">
+          <div class="panel-title">已签约球员</div>
+          <label>查询球员类型</label>
+          <select id="inventorySeedType" class="input">
+            <option value="0">0 - 青训新秀</option>
+            <option value="1">1 - 主力球员</option>
+            <option value="2">2 - 明星球员</option>
+          </select>
+          <button id="loadInventoryBtn" class="btn btn-dark btn-block">读取球员信息</button>
+          <div class="result-box" id="inventoryResult">等待读取...</div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">阵位状态</div>
+          <label>查询地址</label>
+          <input id="plotUserAddress" class="input" placeholder="默认当前钱包地址" />
+          <label>阵位编号</label>
+          <input id="plotId" class="input" type="number" min="0" value="0" />
+          <button id="loadPlotBtn" class="btn btn-dark btn-block">读取阵位</button>
+          <div class="result-box" id="plotResult">等待读取...</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="logs" class="section" style="display: none;">
+      <div class="section-head">
+        <h2>执行日志</h2>
+        <p>所有读取、授权、交易发送、确认结果都会输出在这里。</p>
+      </div>
+
+      <div class="panel">
+        <pre id="logBox" class="log-box">等待操作...</pre>
+      </div>
+    </section>
+  </main>
+
+  <div id="observeDrawer" class="plant-modal">
+    <div class="plant-modal-panel observe-modal-panel">
+      <div class="plant-modal-head observe-drawer-head">
+        <div>
+          <strong>可观察目标</strong>
+          <span>这里会展示你最近观察过的目标，点击目标阵位即可自动带入地址与编号。</span>
+        </div>
+        <button id="closeObserveDrawerBtn" class="plant-modal-close" type="button">×</button>
+      </div>
+      <div id="observeTargetList" class="observe-target-list"></div>
+    </div>
+  </div>
+
+  <div id="plantSeedModal" class="plant-modal">
+    <div class="plant-modal-panel plant-select-modal-panel">
+      <div class="plant-modal-head">
+        <div>
+          <strong id="plantModalTitle">选择上阵球员</strong>
+          <span id="plantModalText">请选择要上阵到该阵位的球员</span>
+        </div>
+        <button id="closePlantModalBtn" class="plant-modal-close" type="button">×</button>
+      </div>
+      <div id="plantSeedModalCards" class="plant-modal-grid"></div>
+      <div class="plant-modal-foot">
+        <span id="plantModalSummary">当前未选择球员</span>
+        <button id="confirmPlantBtn" class="btn btn-primary">确认上阵</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="actionConfirmModal" class="plant-modal">
+    <div class="plant-modal-panel confirm-modal-panel">
+      <div class="plant-modal-head">
+        <div>
+          <strong id="actionConfirmTitle">确认操作</strong>
+          <span id="actionConfirmText">确认继续本次操作吗？</span>
+        </div>
+        <button id="closeActionConfirmBtn" class="plant-modal-close" type="button">×</button>
+      </div>
+      <div class="confirm-modal-body">
+        <div class="confirm-modal-cost" id="actionConfirmCost">本次将消耗 0 BNB</div>
+      </div>
+      <div class="plant-modal-foot confirm-modal-foot">
+        <button id="cancelActionConfirmBtn" class="btn btn-dark" type="button">取消</button>
+        <button id="submitActionConfirmBtn" class="btn btn-primary" type="button">确认继续</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="infoModal" class="plant-modal">
+    <div class="plant-modal-panel info-modal-panel">
+      <div class="plant-modal-head">
+        <div>
+          <strong id="infoModalTitle">提示</strong>
+          <span id="infoModalText">请先完成当前操作。</span>
+        </div>
+        <button id="closeInfoModalBtn" class="plant-modal-close" type="button">×</button>
+      </div>
+      <div class="plant-modal-foot confirm-modal-foot">
+        <button id="confirmInfoModalBtn" class="btn btn-primary" type="button">我知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="rulesModal" class="plant-modal">
+    <div class="plant-modal-panel rules-modal-panel">
+      <div class="plant-modal-head rules-modal-head">
+        <div>
+          <strong>规则说明</strong>
+          <span>我的阵容、球员招募与赛季操作细节</span>
+        </div>
+        <button id="closeRulesModalBtn" class="plant-modal-close" type="button">×</button>
+      </div>
+      <div class="rules-modal-content">
+        <div class="rules-card"><strong>我的阵容</strong><p>默认 3 个阵位，最多扩充到 8 个。已签约球员可安排到空位开始本轮参赛。</p></div>
+        <div class="rules-card"><strong>球员招募</strong><p>球员分为青训、主力、明星三档。不同档位对应不同签约价格、成长时间和基础积分。</p></div>
+        <div class="rules-card"><strong>集训规则</strong><p>每个阵位最多集训 2 次，每次可缩短当前成长周期的 20%。</p></div>
+        <div class="rules-card"><strong>防挖机制</strong><p>备战中的阵位可设置防挖保护，降低被其他玩家挖走的风险。</p></div>
+        <div class="rules-card"><strong>赛后结算</strong><p>球员成型后进入结算/窗口阶段。完成赛后结算后，积分计入当前赛季。</p></div>
+        <div class="rules-card"><strong>赛季奖励</strong><p>每赛季持续 1 小时，按当季有效积分占比分配奖池，当前版本每赛季释放 30%。</p></div>
+      </div>
+      <div class="plant-modal-foot confirm-modal-foot">
+        <button id="confirmRulesModalBtn" class="btn btn-primary" type="button">我知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="activityModal" class="plant-modal">
+    <div class="plant-modal-panel activity-modal-panel">
+      <div class="plant-modal-head">
+        <div>
+          <strong>联赛动态</strong>
+          <span>最近 100 条链上行为记录</span>
+        </div>
+        <button id="closeActivityModalBtn" class="plant-modal-close" type="button">×</button>
+      </div>
+      <div id="activityModalList" class="activity-list activity-modal-list"></div>
+    </div>
+  </div>
+
+  <div id="walletBusyOverlay" class="wallet-busy-overlay">
+    <div class="wallet-busy-panel">
+      <img class="wallet-busy-logo" src="./jpg/logo.webp" alt="Soccer绿茵联赛" />
+      <strong id="walletBusyTitle">等待钱包确认</strong>
+      <span id="walletBusyText">请在钱包中完成当前操作，不要重复点击。</span>
+      <div class="wallet-busy-spinner"></div>
+      <div class="wallet-busy-actions">
+        <button id="walletBusyDismissBtn" class="btn btn-dark btn-small" type="button">关闭提示</button>
+        <button id="walletBusyRefreshBtn" class="btn btn-primary btn-small" type="button">刷新状态</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="txStatusCard" class="tx-status-card">
+    <strong id="txStatusTitle">交易确认中</strong>
+    <span id="txStatusText">交易已发送，正在等待链上确认...</span>
+    <code id="txStatusHash"></code>
+    <div class="tx-status-actions">
+      <button id="txStatusRefreshBtn" class="btn btn-primary btn-small" type="button">刷新状态</button>
+      <button id="txStatusDismissBtn" class="btn btn-dark btn-small" type="button">关闭提示</button>
+    </div>
+  </div>
+
+  <div id="toastWrap" class="toast-wrap"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+  <script src="./js/app.js"></script>
+  <script src="./js/abi.js"></script>
+  <script src="./js/config.js"></script>
+</body>
+</html>

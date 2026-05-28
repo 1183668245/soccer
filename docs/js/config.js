@@ -1785,8 +1785,17 @@ function initPlayPage() {
       updateCurrentActionGuide();
     }
   });
-  injected?.on?.("chainChanged", () => {
-    window.location.reload();
+  injected?.on?.("chainChanged", async () => {
+    try {
+      log("检测到网络状态变化，正在重新同步页面...");
+      stopAutoRefresh();
+      clearInterval(activityTimer);
+      activityTimer = null;
+      await syncConnectedAccount();
+      toast("网络状态已更新");
+    } catch (err) {
+      log(`网络切换后重连失败: ${getErrorMessage(err)}`, true);
+    }
   });
 }
 

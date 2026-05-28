@@ -179,15 +179,35 @@ const CUSTOM_ERRORS_CN = {
 };
 
 function getErrorMessage(err) {
-  if (err?.revert?.name && CUSTOM_ERRORS_CN[err.revert.name]) {
-    return CUSTOM_ERRORS_CN[err.revert.name];
+  const revertName = err?.revert?.name || err?.data?.errorName || err?.error?.data?.errorName;
+  if (revertName && CUSTOM_ERRORS_CN[revertName]) {
+    return CUSTOM_ERRORS_CN[revertName];
   }
-  return err?.shortMessage
-    || err?.info?.error?.message
-    || err?.error?.message
-    || err?.data?.originalError?.message
-    || err?.message
-    || String(err);
+
+  const candidates = [
+    err?.shortMessage,
+    err?.reason,
+    err?.revert?.signature,
+    err?.revert?.args?.[0],
+    err?.info?.error?.message,
+    err?.info?.payload?.method ? `RPC ${err.info.payload.method} 调用失败` : "",
+    err?.error?.reason,
+    err?.error?.message,
+    err?.error?.data?.message,
+    err?.data?.message,
+    err?.data?.originalError?.message,
+    err?.message,
+    String(err || "")
+  ].filter(Boolean);
+
+  const merged = candidates.join(" | ");
+  if (merged.includes("InsufficientPlayBalance")) return CUSTOM_ERRORS_CN.InsufficientPlayBalance;
+  if (merged.includes("InvalidAmount")) return CUSTOM_ERRORS_CN.InvalidAmount;
+  if (merged.includes("execution reverted")) return merged.replace(/^.*execution reverted:?\s*/i, "");
+  if (merged.includes("could not coalesce error")) {
+    return merged.replace("could not coalesce error", "钱包或RPC返回了非标准错误");
+  }
+  return candidates[0] || "未知错误";
 }
 
 function getWalletProvider() {
@@ -998,7 +1018,9 @@ async function handleBuySeed() {
   const tokenCost = parseTokenInput($("buySeedTokenCost").value.trim());
 
   await sendTx("签约球员", async () => {
+    log(`签约球员 - 授权检查中，数量 ${amount.toString()}，成本 ${formatUnits(tokenCost, tokenDecimals, tokenSymbol)}`);
     await ensureApprove(tokenCost);
+    log("签约球员 - 授权完成，开始提交合约交易");
     return vaultContract.buySeedWithCost(seedType, amount, tokenCost);
   });
 }
